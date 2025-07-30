@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语学习第二天 - 五十音图与助词の</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2d3748;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .hiragana-table, .katakana-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hiragana-table th, .katakana-table th,
+        .hiragana-table td, .katakana-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            font-size: 1.2em;
+        }
+
+        .hiragana-table th, .katakana-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .hiragana-table td, .katakana-table td {
+            background: #f7fafc;
+            transition: background-color 0.3s;
+        }
+
+        .hiragana-table td:hover, .katakana-table td:hover {
+            background: #edf2f7;
+        }
+
+        .japanese-char {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .romaji {
+            font-size: 0.9em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vocab-japanese {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vocab-romaji {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .vocab-meaning {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .grammar-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-sentence {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .japanese-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .romaji-text {
+            font-size: 1em;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+
+        .practice-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f093fb;
+        }
+
+        .tomorrow-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pronunciation-tip {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .review-section {
+            background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 日语学习第二天 🌸</h1>
+        
+        <h2>🔄 昨日复习</h2>
+        <div class="review-section">
+            <p>让我们先复习一下昨天学过的内容：</p>
+            <ul>
+                <li><strong>あ行：</strong>あ い う え お (a i u e o)</li>
+                <li><strong>か行：</strong>か き く け こ (ka ki ku ke ko)</li>
+                <li><strong>基础语法：</strong>名词 + です (desu)</li>
+            </ul>
+        </div>
+
+        <h2>📝 五十音图继续学习</h2>
+        
+        <h3>第三行：さ行（sa行）</h3>
+        <table class="hiragana-table">
+            <tr>
+                <th>平假名</th>
+                <th>さ</th>
+                <th>し</th>
+                <th>す</th>
+                <th>せ</th>
+                <th>そ</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">サ</span><br><span class="romaji">sa</span></td>
+                <td><span class="japanese-char">シ</span><br><span class="romaji">shi</span></td>
+                <td><span class="japanese-char">ス</span><br><span class="romaji">su</span></td>
+                <td><span class="japanese-char">セ</span><br><span class="romaji">se</span></td>
+                <td><span class="japanese-char">ソ</span><br><span class="romaji">so</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>さ/サ</strong>：舌尖轻触下齿，类似中文"撒"</li>
+                <li><strong>し/シ</strong>：注意读"shi"不是"si"</li>
+                <li><strong>す/ス</strong>：嘴唇微微突出，类似中文"苏"</li>
+                <li><strong>せ/セ</strong>：类似中文"塞"</li>
+                <li><strong>そ/ソ</strong>：类似中文"搜"</li>
+            </ul>
+        </div>
+
+        <h3>第四行：た行（ta行）</h3>
+        <table class="katakana-table">
+            <tr>
+                <th>平假名</th>
+                <th>た</th>
+                <th>ち</th>
+                <th>つ</th>
+                <th>て</th>
+                <th>と</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">タ</span><br><span class="romaji">ta</span></td>
+                <td><span class="japanese-char">チ</span><br><span class="romaji">chi</span></td>
+                <td><span class="japanese-char">ツ</span><br><span class="romaji">tsu</span></td>
+                <td><span class="japanese-char">テ</span><br><span class="romaji">te</span></td>
+                <td><span class="japanese-char">ト</span><br><span class="romaji">to</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>た/タ</strong>：舌尖轻触上齿龈，类似中文"他"</li>
+                <li><strong>ち/チ</strong>：注意读"chi"不是"ti"</li>
+                <li><strong>つ/ツ</strong>：注意读"tsu"，这是日语特有音</li>
+                <li><strong>て/テ</strong>：类似中文"特"</li>
+                <li><strong>と/ト</strong>：类似中文"托"</li>
+            </ul>
+        </div>
+
+        <h3>第五行：な行（na行）</h3>
+        <table class="hiragana-table">
+            <tr>
+                <th>平假名</th>
+                <th>な</th>
+                <th>に</th>
+                <th>ぬ</th>
+                <th>ね</th>
+                <th>の</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">ナ</span><br><span class="romaji">na</span></td>
+                <td><span class="japanese-char">ニ</span><br><span class="romaji">ni</span></td>
+                <td><span class="japanese-char">ヌ</span><br><span class="romaji">nu</span></td>
+                <td><span class="japanese-char">ネ</span><br><span class="romaji">ne</span></td>
+                <td><span class="japanese-char">ノ</span><br><span class="romaji">no</span></td>
+            </tr>
+        </table>
+
+        <h2>📚 10个新单词</h2>
+        <div class="vocabulary-grid">
+            <div class="vocab-card">
+                <div class="vocab-japanese">学生</div>
+                <div class="vocab-romaji">gakusei</div>
+                <div class="vocab-meaning">学生</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">先生</div>
+                <div class="vocab-romaji">sensei</div>
+                <div class="vocab-meaning">老师</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">本</div>
+                <div class="vocab-romaji">hon</div>
+                <div class="vocab-meaning">书</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">ペン</div>
+                <div class="vocab-romaji">pen</div>
+                <div class="vocab-meaning">笔</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">机</div>
+                <div class="vocab-romaji">tsukue</div>
+                <div class="vocab-meaning">桌子</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">椅子</div>
+                <div class="vocab-romaji">isu</div>
+                <div class="vocab-meaning">椅子</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">水</div>
+                <div class="vocab-romaji">mizu</div>
+                <div class="vocab-meaning">水</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">お茶</div>
+                <div class="vocab-romaji">ocha</div>
+                <div class="vocab-meaning">茶</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">コーヒー</div>
+                <div class="vocab-romaji">koohii</div>
+                <div class="vocab-meaning">咖啡</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">友達</div>
+                <div class="vocab-romaji">tomodachi</div>
+                <div class="vocab-meaning">朋友</div>
+            </div>
+        </div>
+
+        <h2>📖 重要语法：助词の (no)</h2>
+        <div class="grammar-section">
+            <p><span class="highlight">の</span> 是日语中最常用的助词之一，主要表示<strong>所属关系</strong>，相当于中文的"的"。</p>
+            
+            <h3>基本句型：</h3>
+            <p style="font-size: 1.3em; text-align: center; font-weight: bold; color: #2d3748;">名词A + の + 名词B</p>
+            
+            <h3>例句：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">わたしの本です。</div>
+                <div class="romaji-text">watashi no hon desu</div>
+                <div class="translation">这是我的书</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">先生のペンです。</div>
+                <div class="romaji-text">sensei no pen desu</div>
+                <div class="translation">这是老师的笔</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">友達の机です。</div>
+                <div class="romaji-text">tomodachi no tsukue desu</div>
+                <div class="translation">这是朋友的桌子</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">これは誰の椅子ですか？</div>
+                <div class="romaji-text">kore wa dare no isu desu ka?</div>
+                <div class="translation">这是谁的椅子？</div>
+            </div>
+            
+            <h3>语法要点：</h3>
+            <ul>
+                <li><strong>の</strong> 连接两个名词，表示前者属于后者</li>
+                <li>可以连续使用：田中さんの友達の本 (田中的朋友的书)</li>
+                <li><strong>誰の</strong> (dare no) 表示"谁的"</li>
+                <li>の也可以用来修饰名词，如：日本の文化 (日本的文化)</li>
+            </ul>
+        </div>
+
+        <h2>🗣️ 实用会话</h2>
+        <div class="grammar-section">
+            <h3>在教室里：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">A: これは誰のペンですか？</div>
+                <div class="romaji-text">A: kore wa dare no pen desu ka?</div>
+                <div class="translation">A: 这是谁的笔？</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">B: わたしのペンです。</div>
+                <div class="romaji-text">B: watashi no pen desu</div>
+                <div class="translation">B: 是我的笔</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">A: あなたの本ですか？</div>
+                <div class="romaji-text">A: anata no hon desu ka?</div>
+                <div class="translation">A: 是你的书吗？</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">B: はい、わたしの本です。</div>
+                <div class="romaji-text">B: hai, watashi no hon desu</div>
+                <div class="translation">B: 是的，是我的书</div>
+            </div>
+        </div>
+
+        <h2>💪 今日练习建议</h2>
+        <div class="practice-section">
+            <div class="practice-item">
+                <strong>📝 书写练习：</strong>さ行、た行、な行各写10遍
+            </div>
+            <div class="practice-item">
+                <strong>🗣️ 发音练习：</strong>重点练习し、ち、つ的发音
+            </div>
+            <div class="practice-item">
+                <strong>🧠 单词记忆：</strong>结合の的用法记忆新单词
+            </div>
+            <div class="practice-item">
+                <strong>✍️ 句型练习：</strong>用の造5个所属关系的句子
+            </div>
+            <div class="practice-item">
+                <strong>💬 会话练习：</strong>和朋友练习"这是谁的..."对话
+            </div>
+        </div>
+
+        <h2>🌅 明日预告</h2>
+        <div class="tomorrow-section">
+            <h3>明天我们将学习：</h3>
+            <ul style="text-align: left; display: inline-block;">
+                <li>は行、ま行、や行</li>
+                <li>数字1-10的日语表达</li>
+                <li>疑问词的用法</li>
+                <li>简单的时间表达</li>
+            </ul>
+            <p style="margin-top: 20px; font-size: 1.2em; font-weight: bold;">
+                🌟 很棒！你已经掌握了15个假名和重要的の用法！继续加油！🌟
+            </p>
+        </div>
+    </div>
+</body>
+</html>
