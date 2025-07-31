@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语学习第三天 - 五十音图与数字表达</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2d3748;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .hiragana-table, .katakana-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hiragana-table th, .katakana-table th,
+        .hiragana-table td, .katakana-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            font-size: 1.2em;
+        }
+
+        .hiragana-table th, .katakana-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .hiragana-table td, .katakana-table td {
+            background: #f7fafc;
+            transition: background-color 0.3s;
+        }
+
+        .hiragana-table td:hover, .katakana-table td:hover {
+            background: #edf2f7;
+        }
+
+        .japanese-char {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .romaji {
+            font-size: 0.9em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vocab-japanese {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vocab-romaji {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .vocab-meaning {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .grammar-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-sentence {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .japanese-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .romaji-text {
+            font-size: 1em;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+
+        .practice-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f093fb;
+        }
+
+        .tomorrow-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pronunciation-tip {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .review-section {
+            background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .number-card {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .number-japanese {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .number-romaji {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .question-word {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f093fb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .home-button {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">🏠 返回首页</a>
+    
+    <div class="container">
+        <h1>🌸 日语学习第三天 🌸</h1>
+        
+        <h2>🔄 昨日复习</h2>
+        <div class="review-section">
+            <p>让我们先复习一下昨天学过的内容：</p>
+            <ul>
+                <li><strong>さ行：</strong>さ し す せ そ (sa shi su se so)</li>
+                <li><strong>た行：</strong>た ち つ て と (ta chi tsu te to)</li>
+                <li><strong>な行：</strong>な に ぬ ね の (na ni nu ne no)</li>
+                <li><strong>重要语法：</strong>助词の (no) 表示所属关系</li>
+            </ul>
+        </div>
+
+        <h2>📝 五十音图继续学习</h2>
+        
+        <h3>第六行：は行（ha行）</h3>
+        <table class="hiragana-table">
+            <tr>
+                <th>平假名</th>
+                <th>は</th>
+                <th>ひ</th>
+                <th>ふ</th>
+                <th>へ</th>
+                <th>ほ</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">ハ</span><br><span class="romaji">ha</span></td>
+                <td><span class="japanese-char">ヒ</span><br><span class="romaji">hi</span></td>
+                <td><span class="japanese-char">フ</span><br><span class="romaji">fu</span></td>
+                <td><span class="japanese-char">ヘ</span><br><span class="romaji">he</span></td>
+                <td><span class="japanese-char">ホ</span><br><span class="romaji">ho</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>は/ハ</strong>：类似中文"哈"，但发音较轻</li>
+                <li><strong>ひ/ヒ</strong>：类似中文"希"，嘴唇微扁</li>
+                <li><strong>ふ/フ</strong>：注意读"fu"不是"hu"，上齿轻触下唇</li>
+                <li><strong>へ/ヘ</strong>：类似中文"黑"的起始音</li>
+                <li><strong>ほ/ホ</strong>：类似中文"活"的起始音</li>
+            </ul>
+        </div>
+
+        <h3>第七行：ま行（ma行）</h3>
+        <table class="katakana-table">
+            <tr>
+                <th>平假名</th>
+                <th>ま</th>
+                <th>み</th>
+                <th>む</th>
+                <th>め</th>
+                <th>も</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">マ</span><br><span class="romaji">ma</span></td>
+                <td><span class="japanese-char">ミ</span><br><span class="romaji">mi</span></td>
+                <td><span class="japanese-char">ム</span><br><span class="romaji">mu</span></td>
+                <td><span class="japanese-char">メ</span><br><span class="romaji">me</span></td>
+                <td><span class="japanese-char">モ</span><br><span class="romaji">mo</span></td>
+            </tr>
+        </table>
+
+        <h3>第八行：や行（ya行）</h3>
+        <table class="hiragana-table">
+            <tr>
+                <th>平假名</th>
+                <th>や</th>
+                <th></th>
+                <th>ゆ</th>
+                <th></th>
+                <th>よ</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">ヤ</span><br><span class="romaji">ya</span></td>
+                <td></td>
+                <td><span class="japanese-char">ユ</span><br><span class="romaji">yu</span></td>
+                <td></td>
+                <td><span class="japanese-char">ヨ</span><br><span class="romaji">yo</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>や/ヤ</strong>：类似中文"呀"</li>
+                <li><strong>ゆ/ユ</strong>：类似中文"优"</li>
+                <li><strong>よ/ヨ</strong>：类似中文"哟"</li>
+                <li>や行只有3个假名，没有yi和ye</li>
+            </ul>
+        </div>
+
+        <h2>🔢 数字1-10的日语表达</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number-japanese">一</div>
+                <div class="number-romaji">いち (ichi)</div>
+                <div>1</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">二</div>
+                <div class="number-romaji">に (ni)</div>
+                <div>2</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">三</div>
+                <div class="number-romaji">さん (san)</div>
+                <div>3</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">四</div>
+                <div class="number-romaji">し/よん (shi/yon)</div>
+                <div>4</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">五</div>
+                <div class="number-romaji">ご (go)</div>
+                <div>5</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">六</div>
+                <div class="number-romaji">ろく (roku)</div>
+                <div>6</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">七</div>
+                <div class="number-romaji">しち/なな (shichi/nana)</div>
+                <div>7</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">八</div>
+                <div class="number-romaji">はち (hachi)</div>
+                <div>8</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">九</div>
+                <div class="number-romaji">く/きゅう (ku/kyuu)</div>
+                <div>9</div>
+            </div>
+            <div class="number-card">
+                <div class="number-japanese">十</div>
+                <div class="number-romaji">じゅう (juu)</div>
+                <div>10</div>
+            </div>
+        </div>
+
+        <h2>📚 10个新单词</h2>
+        <div class="vocabulary-grid">
+            <div class="vocab-card">
+                <div class="vocab-japanese">電話</div>
+                <div class="vocab-romaji">denwa</div>
+                <div class="vocab-meaning">电话</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">時計</div>
+                <div class="vocab-romaji">tokei</div>
+                <div class="vocab-meaning">钟表</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">お金</div>
+                <div class="vocab-romaji">okane</div>
+                <div class="vocab-meaning">钱</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">写真</div>
+                <div class="vocab-romaji">shashin</div>
+                <div class="vocab-meaning">照片</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">車</div>
+                <div class="vocab-romaji">kuruma</div>
+                <div class="vocab-meaning">汽车</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">駅</div>
+                <div class="vocab-romaji">eki</div>
+                <div class="vocab-meaning">车站</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">店</div>
+                <div class="vocab-romaji">mise</div>
+                <div class="vocab-meaning">商店</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">薬</div>
+                <div class="vocab-romaji">kusuri</div>
+                <div class="vocab-meaning">药</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">宿題</div>
+                <div class="vocab-romaji">shukudai</div>
+                <div class="vocab-meaning">作业</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">晩ご飯</div>
+                <div class="vocab-romaji">bangohan</div>
+                <div class="vocab-meaning">晚饭</div>
+            </div>
+        </div>
+
+        <h2>📖 重要语法：疑问词</h2>
+        <div class="grammar-section">
+            <h3>常用疑问词：</h3>
+            <div class="question-word">
+                <strong>何（なに/なん）</strong> - 什么 (nani/nan)
+                <br>例：これは何ですか？ (这是什么？)
+            </div>
+            <div class="question-word">
+                <strong>誰（だれ）</strong> - 谁 (dare)
+                <br>例：それは誰の本ですか？ (那是谁的书？)
+            </div>
+            <div class="question-word">
+                <strong>どこ</strong> - 哪里 (doko)
+                <br>例：駅はどこですか？ (车站在哪里？)
+            </div>
+            <div class="question-word">
+                <strong>いくつ</strong> - 几个 (ikutsu)
+                <br>例：りんごはいくつですか？ (有几个苹果？)
+            </div>
+            <div class="question-word">
+                <strong>いくら</strong> - 多少钱 (ikura)
+                <br>例：これはいくらですか？ (这个多少钱？)
+            </div>
+
+            <h3>数字的用法：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">わたしは本を三冊持っています。</div>
+                <div class="romaji-text">watashi wa hon o san-satsu motte imasu</div>
+                <div class="translation">我有三本书</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">時計はいくらですか？</div>
+                <div class="romaji-text">tokei wa ikura desu ka?</div>
+                <div class="translation">钟表多少钱？</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">駅まで何分ですか？</div>
+                <div class="romaji-text">eki made nan-pun desu ka?</div>
+                <div class="translation">到车站需要几分钟？</div>
+            </div>
+        </div>
+
+        <h2>🗣️ 实用会话：购物场景</h2>
+        <div class="grammar-section">
+            <h3>在商店里：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">A: いらっしゃいませ！何をお探しですか？</div>
+                <div class="romaji-text">A: irasshaimase! nani o osagashi desu ka?</div>
+                <div class="translation">A: 欢迎光临！您在找什么？</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">B: この時計はいくらですか？</div>
+                <div class="romaji-text">B: kono tokei wa ikura desu ka?</div>
+                <div class="translation">B: 这个钟表多少钱？</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">A: 三千円です。</div>
+                <div class="romaji-text">A: sanzen-en desu</div>
+                <div class="translation">A: 3000日元</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">B: じゃあ、これをください。</div>
+                <div class="romaji-text">B: jaa, kore o kudasai</div>
+                <div class="translation">B: 那么，请给我这个</div>
+            </div>
+        </div>
+
+        <h2>💪 今日练习建议</h2>
+        <div class="practice-section">
+            <div class="practice-item">
+                <strong>📝 书写练习：</strong>は行、ま行、や行各写10遍
+            </div>
+            <div class="practice-item">
+                <strong>🗣️ 发音练习：</strong>重点练习ふ、む、ゆ的发音
+            </div>
+            <div class="practice-item">
+                <strong>🧠 数字记忆：</strong>记住1-10的日语读法
+            </div>
+            <div class="practice-item">
+                <strong>✍️ 句型练习：</strong>用疑问词造5个句子
+            </div>
+            <div class="practice-item">
+                <strong>💬 会话练习：</strong>练习购物场景的对话
+            </div>
+        </div>
+
+        <h2>🌅 明日预告</h2>
+        <div class="tomorrow-section">
+            <h3>明天我们将学习：</h3>
+            <ul style="text-align: left; display: inline-block;">
+                <li>ら行、わ行、ん</li>
+                <li>五十音图总复习</li>
+                <li>时间表达法</li>
+                <li>动词基本形介绍</li>
+                <li>自我介绍完整版</li>
+            </ul>
+            <p style="margin-top: 20px; font-size: 1.2em; font-weight: bold;">
+                🌟 太棒了！你已经掌握了26个假名和基础数字！继续加油！🌟
+            </p>
+        </div>
+    </div>
+</body>
+</html>
