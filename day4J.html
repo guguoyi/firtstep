@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语学习第四天 - 五十音图与动词基础</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2d3748;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .hiragana-table, .katakana-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hiragana-table th, .katakana-table th,
+        .hiragana-table td, .katakana-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            font-size: 1.2em;
+        }
+
+        .hiragana-table th, .katakana-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .hiragana-table td, .katakana-table td {
+            background: #f7fafc;
+            transition: background-color 0.3s;
+        }
+
+        .hiragana-table td:hover, .katakana-table td:hover {
+            background: #edf2f7;
+        }
+
+        .japanese-char {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .romaji {
+            font-size: 0.9em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vocab-japanese {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vocab-romaji {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .vocab-meaning {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .grammar-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-sentence {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .japanese-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .romaji-text {
+            font-size: 1em;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+
+        .practice-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f093fb;
+        }
+
+        .tomorrow-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pronunciation-tip {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .review-section {
+            background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .verb-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .verb-table th, .verb-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            font-size: 1.1em;
+        }
+
+        .verb-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .verb-table td {
+            background: #f7fafc;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
+            
+            .home-button {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">🏠 返回首页</a>
+    
+    <div class="container">
+        <h1>🌸 日语学习第四天 🌸</h1>
+        
+        <h2>🔄 昨日复习</h2>
+        <div class="review-section">
+            <p>让我们先复习一下昨天学过的内容：</p>
+            <ul>
+                <li><strong>は行：</strong>は ひ ふ へ ほ (ha hi fu he ho)</li>
+                <li><strong>ま行：</strong>ま み む め も (ma mi mu me mo)</li>
+                <li><strong>や行：</strong>や ゆ よ (ya yu yo)</li>
+                <li><strong>数字1-10：</strong>いち に さん し/よん ご ろく しち/なな はち く/きゅう じゅう</li>
+                <li><strong>重要语法：</strong>疑问词的用法</li>
+            </ul>
+        </div>
+
+        <h2>📝 五十音图继续学习</h2>
+        
+        <h3>第九行：ら行（ra行）</h3>
+        <table class="hiragana-table">
+            <tr>
+                <th>平假名</th>
+                <th>ら</th>
+                <th>り</th>
+                <th>る</th>
+                <th>れ</th>
+                <th>ろ</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">ラ</span><br><span class="romaji">ra</span></td>
+                <td><span class="japanese-char">リ</span><br><span class="romaji">ri</span></td>
+                <td><span class="japanese-char">ル</span><br><span class="romaji">ru</span></td>
+                <td><span class="japanese-char">レ</span><br><span class="romaji">re</span></td>
+                <td><span class="japanese-char">ロ</span><br><span class="romaji">ro</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>ら/ラ</strong>：介于"拉"和"啦"之间，舌尖轻触上齿龈</li>
+                <li><strong>り/リ</strong>：类似"利"，但发音较轻</li>
+                <li><strong>る/ル</strong>：类似"路"，但嘴唇不太突出</li>
+                <li><strong>れ/レ</strong>：类似"来"的起始音</li>
+                <li><strong>ろ/ロ</strong>：类似"罗"，但发音较短</li>
+            </ul>
+        </div>
+
+        <h3>第十行：わ行（wa行）</h3>
+        <table class="katakana-table">
+            <tr>
+                <th>平假名</th>
+                <th>わ</th>
+                <th></th>
+                <th></th>
+                <th>を</th>
+                <th>ん</th>
+            </tr>
+            <tr>
+                <td><strong>片假名</strong></td>
+                <td><span class="japanese-char">ワ</span><br><span class="romaji">wa</span></td>
+                <td></td>
+                <td></td>
+                <td><span class="japanese-char">ヲ</span><br><span class="romaji">wo</span></td>
+                <td><span class="japanese-char">ン</span><br><span class="romaji">n</span></td>
+            </tr>
+        </table>
+
+        <div class="pronunciation-tip">
+            <h4>🎵 发音要点：</h4>
+            <ul>
+                <li><strong>わ/ワ</strong>：类似中文"哇"</li>
+                <li><strong>を/ヲ</strong>：发音同"お"，在现代日语中发音为"o"</li>
+                <li><strong>ん/ン</strong>：鼻音，类似"嗯"，是唯一一个单独使用的假名</li>
+                <li>わ行只有わ和を两个假名，加上特殊假名ん</li>
+            </ul>
+        </div>
+
+        <h2>📚 10个新单词</h2>
+        <div class="vocabulary-grid">
+            <div class="vocab-card">
+                <div class="vocab-japanese">学校</div>
+                <div class="vocab-romaji">gakkou</div>
+                <div class="vocab-meaning">学校</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">先生</div>
+                <div class="vocab-romaji">sensei</div>
+                <div class="vocab-meaning">老师</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">学生</div>
+                <div class="vocab-romaji">gakusei</div>
+                <div class="vocab-meaning">学生</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">教室</div>
+                <div class="vocab-romaji">kyoushitsu</div>
+                <div class="vocab-meaning">教室</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">食べる</div>
+                <div class="vocab-romaji">taberu</div>
+                <div class="vocab-meaning">吃</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">飲む</div>
+                <div class="vocab-romaji">nomu</div>
+                <div class="vocab-meaning">喝</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">見る</div>
+                <div class="vocab-romaji">miru</div>
+                <div class="vocab-meaning">看</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">行く</div>
+                <div class="vocab-romaji">iku</div>
+                <div class="vocab-meaning">去</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">来る</div>
+                <div class="vocab-romaji">kuru</div>
+                <div class="vocab-meaning">来</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-japanese">する</div>
+                <div class="vocab-romaji">suru</div>
+                <div class="vocab-meaning">做</div>
+            </div>
+        </div>
+
+        <h2>📖 重要语法：动词基础</h2>
+        <div class="grammar-section">
+            <h3>日语动词分类：</h3>
+            <p>日语动词分为三类：</p>
+            <ul>
+                <li><strong>一类动词（五段动词）</strong>：如書く、読む、行く</li>
+                <li><strong>二类动词（上一段动词）</strong>：如食べる、見る</li>
+                <li><strong>三类动词（不规则动词）</strong>：する、来る</li>
+            </ul>
+
+            <h3>动词ます形（礼貌形）：</h3>
+            <table class="verb-table">
+                <tr>
+                    <th>原形</th>
+                    <th>ます形</th>
+                    <th>例句</th>
+                </tr>
+                <tr>
+                    <td>食べる</td>
+                    <td>食べます</td>
+                    <td>私はパンを食べます</td>
+                </tr>
+                <tr>
+                    <td>飲む</td>
+                    <td>飲みます</td>
+                    <td>水を飲みます</td>
+                </tr>
+                <tr>
+                    <td>見る</td>
+                    <td>見ます</td>
+                    <td>テレビを見ます</td>
+                </tr>
+                <tr>
+                    <td>行く</td>
+                    <td>行きます</td>
+                    <td>学校に行きます</td>
+                </tr>
+                <tr>
+                    <td>する</td>
+                    <td>します</td>
+                    <td>宿題をします</td>
+                </tr>
+            </table>
+
+            <h3>助词を的用法：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">私はりんごを食べます。</div>
+                <div class="romaji-text">watashi wa ringo o tabemasu</div>
+                <div class="translation">我吃苹果。</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">学生は日本語を勉強します。</div>
+                <div class="romaji-text">gakusei wa nihongo o benkyou shimasu</div>
+                <div class="translation">学生学习日语。</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">先生は本を読みます。</div>
+                <div class="romaji-text">sensei wa hon o yomimasu</div>
+                <div class="translation">老师读书。</div>
+            </div>
+        </div>
+        <h2>📖 重要语法：动词基础与ます形变换</h2>
+<div class="grammar-section">
+    <h3>日语动词分类：</h3>
+    <p>日语动词分为三类，每类有不同的ます形变换规则：</p>
+    
+    <div style="margin: 20px 0;">
+        <h4>🥇 一类动词（五段动词）</h4>
+        <p><strong>识别特征：</strong>词尾不是「る」，或者词尾是「る」但倒数第二个假名不在い段或え段</p>
+        <p><strong>变换规则：</strong>将词尾的う段假名变为对应的い段假名，再加「ます」</p>
+        
+        <table class="verb-table">
+            <tr>
+                <th>原形</th>
+                <th>ます形</th>
+                <th>变换方法</th>
+                <th>例句</th>
+            </tr>
+            <tr>
+                <td>書く</td>
+                <td>書きます</td>
+                <td>く → き + ます</td>
+                <td>本を書きます</td>
+            </tr>
+            <tr>
+                <td>読む</td>
+                <td>読みます</td>
+                <td>む → み + ます</td>
+                <td>新聞を読みます</td>
+            </tr>
+            <tr>
+                <td>行く</td>
+                <td>行きます</td>
+                <td>く → き + ます</td>
+                <td>学校に行きます</td>
+            </tr>
+            <tr>
+                <td>話す</td>
+                <td>話します</td>
+                <td>す → し + ます</td>
+                <td>日本語を話します</td>
+            </tr>
+            <tr>
+                <td>待つ</td>
+                <td>待ちます</td>
+                <td>つ → ち + ます</td>
+                <td>バスを待ちます</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin: 20px 0;">
+        <h4>🥈 二类动词（上一段动词）</h4>
+        <p><strong>识别特征：</strong>词尾是「る」，且倒数第二个假名在い段或え段</p>
+        <p><strong>变换规则：</strong>去掉「る」，直接加「ます」</p>
+        
+        <table class="verb-table">
+            <tr>
+                <th>原形</th>
+                <th>ます形</th>
+                <th>变换方法</th>
+                <th>例句</th>
+            </tr>
+            <tr>
+                <td>食べる</td>
+                <td>食べます</td>
+                <td>る → ます</td>
+                <td>パンを食べます</td>
+            </tr>
+            <tr>
+                <td>見る</td>
+                <td>見ます</td>
+                <td>る → ます</td>
+                <td>テレビを見ます</td>
+            </tr>
+            <tr>
+                <td>起きる</td>
+                <td>起きます</td>
+                <td>る → ます</td>
+                <td>7時に起きます</td>
+            </tr>
+            <tr>
+                <td>教える</td>
+                <td>教えます</td>
+                <td>る → ます</td>
+                <td>英語を教えます</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin: 20px 0;">
+        <h4>🥉 三类动词（不规则动词）</h4>
+        <p><strong>特征：</strong>只有「する」和「来る」两个动词</p>
+        <p><strong>变换规则：</strong>需要单独记忆</p>
+        
+        <table class="verb-table">
+            <tr>
+                <th>原形</th>
+                <th>ます形</th>
+                <th>变换方法</th>
+                <th>例句</th>
+            </tr>
+            <tr>
+                <td>する</td>
+                <td>します</td>
+                <td>特殊变化</td>
+                <td>宿題をします</td>
+            </tr>
+            <tr>
+                <td>来る</td>
+                <td>来ます</td>
+                <td>特殊变化</td>
+                <td>学校に来ます</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pronunciation-tip">
+        <h4>💡 记忆技巧：</h4>
+        <ul>
+            <li><strong>一类动词：</strong>记住「う段→い段+ます」的规律</li>
+            <li><strong>二类动词：</strong>去掉「る」直接加「ます」</li>
+            <li><strong>三类动词：</strong>只有「する」和「来る」需要特殊记忆</li>
+        </ul>
+    </div>
+
+    <h3>助词を的用法：</h3>
+    <p>助词「を」用于标记动作的直接宾语，放在宾语后面，动词前面。</p>
+    
+    <div class="example-sentence">
+        <div class="japanese-text">私はりんごを食べます。</div>
+        <div class="romaji-text">watashi wa ringo o tabemasu</div>
+        <div class="translation">我吃苹果。（りんご是宾语）</div>
+    </div>
+    
+    <div class="example-sentence">
+        <div class="japanese-text">学生は日本語を勉強します。</div>
+        <div class="romaji-text">gakusei wa nihongo o benkyou shimasu</div>
+        <div class="translation">学生学习日语。（日本語是宾语）</div>
+    </div>
+    </div>
+        <h2>🗣️ 实用会话：学校场景</h2>
+        <div class="grammar-section">
+            <h3>在教室里：</h3>
+            <div class="example-sentence">
+                <div class="japanese-text">A: おはようございます！今日は何をしますか？</div>
+                <div class="romaji-text">A: ohayou gozaimasu! kyou wa nani o shimasu ka?</div>
+                <div class="translation">A: 早上好！今天做什么？</div>
+            </div>
+            
+            <div class="example-sentence">
+                <div class="japanese-text">B: 日本語を勉強して、本を読みます。</div>
+                <div class="romaji-text">B: nihongo o benkyou shite, hon o yomimasu</div>
+                <div class="translation">B: 学习日语，然后读书。</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">A: 昼ご飯を食べに行きましょう！</div>
+                <div class="romaji-text">A: hirugohan o tabe ni ikimashou!</div>
+                <div class="translation">A: 一起去吃午饭吧！</div>
+            </div>
+
+            <div class="example-sentence">
+                <div class="japanese-text">B: はい、いきましょう！何を食べますか？</div>
+                <div class="romaji-text">B: hai, ikimashou! nani o tabemasu ka?</div>
+                <div class="translation">B: 好的，一起去！吃什么？</div>
+            </div>
+        </div>
+
+        <h2>💪 今日练习建议</h2>
+        <div class="practice-section">
+            <div class="practice-item">
+                <strong>📝 书写练习：</strong>ら行、わ行各写10遍，注意ん的写法
+            </div>
+            <div class="practice-item">
+                <strong>🗣️ 发音练习：</strong>重点练习ら行和ん的发音
+            </div>
+            <div class="practice-item">
+                <strong>📚 动词练习：</strong>将今日学的5个动词变为ます形
+            </div>
+            <div class="practice-item">
+                <strong>✍️ 造句练习：</strong>用助词を造5个句子
+            </div>
+            <div class="practice-item">
+                <strong>🎯 会话练习：</strong>练习学校场景的对话
+            </div>
+        </div>
+
+        <div class="tomorrow-section">
+            <h3>🌅 明日预告</h3>
+            <p>明天我们将学习：</p>
+            <ul style="list-style: none; padding: 0;">
+                <li>✨ 形容词的基础用法</li>
+                <li>✨ 时间表达法</li>
+                <li>✨ 日常作息会话</li>
+                <li>✨ 更多实用单词</li>
+            </ul>
+        </div>
+        <div class="navigation-buttons">
+            <a href="day3J.html" class="nav-button">← 返回第三天</a>
+            <a href="index.html" class="nav-button">🏠 返回首页</a>
+            <span style="background: #ccc; color: #666; padding: 15px 30px; border-radius: 25px; font-weight: bold; text-align: center; flex: 1; cursor: not-allowed;">第五天敬请期待</span>
+        </div>
+    </div>
+</body>
+</html>
