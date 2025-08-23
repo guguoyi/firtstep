@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语学习 Day 1 - 平假名基础</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #ffd3e1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            width: 100%;
+            max-width: 1200px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: containerEntry 0.8s ease-out;
+        }
+
+        @keyframes containerEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf, #b8e6b8);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            opacity: 0.9;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: hidden;
+            padding: 0;
+            position: relative;
+            contain: layout style;
+            height: 100%;
+        }
+
+        .tab-pane {
+            display: none;
+            height: 100%;
+            min-height: 500px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            overflow-y: auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .tab-pane.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            height: 100%;
+        }
+
+        .mini-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            backface-visibility: hidden;
+            contain: layout style;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.15);
+        }
+
+        .mini-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .mini-card h3 {
+            color: #7dd3c0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* 横向紧凑排列 */
+        .hiragana-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .hiragana-cell {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px 10px;
+            min-height: 70px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            will-change: transform;
+        }
+
+        .hiragana-cell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.2);
+            border-color: rgba(125, 211, 192, 0.4);
+        }
+
+        .hiragana-char {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
+
+        .hiragana-romaji {
+            font-size: 0.8rem;
+            color: #7dd3c0;
+            font-weight: 600;
+            font-family: 'Courier New', 'Consolas', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .katakana-char {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+            font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+            margin-top: 2px;
+            line-height: 1;
+        }
+
+        /* 横向紧凑布局 */
+        .kana-comparison {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .kana-pair {
+            display: none;
+        }
+
+        .kana-type {
+            display: none;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .vocab-cell {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 8px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.2);
+            border-color: rgba(125, 211, 192, 0.4);
+        }
+
+        .vocab-jp {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .vocab-cn {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .grammar-section {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .grammar-example {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .listening-section {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .audio-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .practice-section {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .practice-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e6ff;
+            border-radius: 5px;
+            font-family: inherit;
+            margin: 5px 0;
+        }
+
+        .practice-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(125, 211, 192, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7dd3c0, #a8e6cf);
+            transition: width 0.3s ease;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(125, 211, 192, 0.1), rgba(168, 230, 207, 0.1));
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #7dd3c0;
+            border: 1px solid rgba(125, 211, 192, 0.2);
+        }
+
+        .tip-box h4 {
+            color: #2d3436;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .tip-box p {
+            color: #2d3436;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .vocab-romaji {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .vocab-cn {
+            font-size: 0.8rem;
+            color: #667eea;
+            margin-top: 2px;
+        }
+
+        .grammar-box {
+            background: white;
+            border: 1px solid #e0e6ff;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .intro-template {
+            margin-bottom: 25px;
+        }
+
+        .intro-example {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .jp-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .jp-line:last-child {
+            border-bottom: none;
+        }
+
+        .romaji-guide {
+            background: rgba(125, 211, 192, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .romaji-guide ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .romaji-guide li {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .copy-practice textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .copy-practice textarea:focus {
+            outline: none;
+            border-color: #7dd3c0;
+            box-shadow: 0 0 0 2px rgba(125, 211, 192, 0.2);
+        }
+
+        .audio-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .hiragana-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 6px;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .header {
+                padding: 10px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.1rem;
+            }
+            
+            .tab {
+                padding: 8px 4px;
+                font-size: 0.7rem;
+            }
+            
+            .tab-content {
+                padding: 10px;
+            }
+        }
+
+        /* 假名对齐展示样式 */
+        .kana-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .kana-pair {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .kana-type {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #7dd3c0;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background: rgba(125, 211, 192, 0.1);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .kana-comparison {
+                gap: 15px;
+            }
+            
+            .kana-pair {
+                width: 100%;
+            }
+        }
+
+        /* Tongue Twisters */
+        .tongue-twisters {
+            margin: 20px 0;
+        }
+
+        .twister-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .twister-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.2);
+            border-color: rgba(125, 211, 192, 0.4);
+        }
+
+        .twister-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #2d3748;
+        }
+
+        .twister-tips {
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(125, 211, 192, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #7dd3c0;
+        }
+
+        .twister-game {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .game-controls .audio-btn {
+            flex: 1;
+            min-width: 120px;
+            font-size: 0.9rem;
+            padding: 12px 16px;
+        }
+
+        @media (max-width: 768px) {
+            .game-controls {
+                flex-direction: column;
+            }
+            
+            .game-controls .audio-btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 标签页切换功能
+        function showTab(tabName) {
+            // 隐藏所有标签页
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // 移除所有标签按钮的active类
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 显示选中的标签页
+            document.getElementById(tabName).classList.add('active');
+            
+            // 为选中的标签按钮添加active类
+            event.target.classList.add('active');
+        }
+
+        // 音频播放功能（模拟）
+        function playSound(character) {
+            // 在实际应用中，这里应该播放真实的音频文件
+            console.log(`播放发音: ${character}`);
+            
+            // 创建临时的视觉反馈
+            const audio = new Audio();
+            audio.volume = 0.5;
+            
+            // 显示播放提示
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(177, 156, 217, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-size: 1.2rem;
+                z-index: 1000;
+                animation: fadeInOut 1s ease-in-out;
+            `;
+            toast.textContent = `${character} - ${getRomaji(character)}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 1000);
+        }
+
+        // 获取罗马音
+        function getRomaji(character) {
+            const romajiMap = {
+                // 平假名
+                'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
+                'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
+                // 片假名
+                'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
+                'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
+                'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
+                'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'テ': 'te', 'ト': 'to'
+            };
+            return romajiMap[character] || '';
+        }
+
+        // 检查写作练习
+        function checkWriting() {
+            const textarea = document.getElementById('self-intro');
+            const feedback = document.getElementById('writing-feedback');
+            const text = textarea.value.trim();
+            
+            if (!text) {
+                feedback.innerHTML = '<span style="color: #f44336;">请先写一些内容！</span>';
+                return;
+            }
+            
+            const lines = text.split('\n').filter(line => line.trim());
+            const hasDesu = lines.some(line => line.includes('です'));
+            
+            if (lines.length >= 3 && hasDesu) {
+                feedback.innerHTML = '<span style="color: #4CAF50;">很好！你掌握了「です」句型的基本用法！</span>';
+            } else if (lines.length < 3) {
+                feedback.innerHTML = '<span style="color: #ff9800;">请至少写3句话！</span>';
+            } else {
+                feedback.innerHTML = '<span style="color: #ff9800;">请确保每句话都包含「です」！</span>';
+            }
+        }
+
+        // 提交小测验
+        function submitQuiz() {
+            const q1Answer = document.querySelector('input[name="q1"]:checked');
+            const q2Answer = document.querySelector('input[name="q2"]:checked');
+            const resultDiv = document.getElementById('quiz-result');
+
+            if (!q1Answer || !q2Answer) {
+                resultDiv.innerHTML = '<span style="color: #f44336;">请回答所有问题！</span>';
+                return;
+            }
+
+            let score = 0;
+            if (q1Answer.value === 'a') score++;
+            if (q2Answer.value === 'b') score++;
+
+            const percentage = (score / 2) * 100;
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 完美！你对Day 1的内容掌握得很好！';
+            } else if (percentage === 50) {
+                message = '😊 不错！再复习一下就能掌握得更好！';
+            } else {
+                message = '💪 继续加油！多练习几次就会更熟练！';
+            }
+
+            resultDiv.innerHTML = `<span style="color: ${percentage === 100 ? '#4CAF50' : '#ff9800'}">
+                ${message} (得分: ${score}/2)
+            </span>`;
+        }
+
+        // 绕口令游戏
+        function startTwister(difficulty) {
+            const resultDiv = document.getElementById('twister-result');
+            const twisters = {
+                easy: {
+                    text: 'あいうえお、おえういあ',
+                    romaji: 'a-i-u-e-o, o-e-u-i-a',
+                    tips: '慢慢来，注意每个假名的清晰度！'
+                },
+                medium: {
+                    text: 'かきくけこ、こけくきか',
+                    romaji: 'ka-ki-ku-ke-ko, ko-ke-ku-ki-ka',
+                    tips: 'k音要清晰，不要太重！'
+                },
+                hard: {
+                    text: 'あか、きこ、うけ、えお',
+                    romaji: 'a-ka, ki-ko, u-ke, e-o',
+                    tips: '先慢后快，挑战3遍不咬舌头！'
+                }
+            };
+
+            const selected = twisters[difficulty];
+            
+            // 播放绕口令
+            playSound(selected.text);
+            
+            // 显示游戏结果
+            resultDiv.innerHTML = `
+                <div style="background: rgba(125, 211, 192, 0.1); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">🎯 ${difficulty === 'easy' ? '简单' : difficulty === 'medium' ? '中等' : '困难'} 模式开始！</h4>
+                    <p><strong>绕口令：</strong> ${selected.text}</p>
+                    <p><strong>罗马音：</strong> ${selected.romaji}</p>
+                    <p><strong>💡 提示：</strong> ${selected.tips}</p>
+                    <button class="audio-btn" onclick="playSound('${selected.text}')" style="margin-top: 10px;">
+                        🔊 再听一遍
+                    </button>
+                </div>
+            `;
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加一些动画效果
+            const cards = document.querySelectorAll('.mini-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+        });
+
+        // 添加淡入动画CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            }
+            
+            .fade-in {
+                animation: fadeIn 0.5s ease-in-out forwards;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    <div class="app-container">
+        <div class="header">
+            <h1>📚 日语学习 Day 1</h1>
+            <p>平假名 & 片假名基础 + 日常用语入门</p>
+        </div>
+
+        <div class="nav-bar">
+            <a href="index.html" class="nav-btn">🏠 首页</a>
+            <span style="font-weight: bold; color: #667eea;">第 1 天</span>
+            <a href="day2.html" class="nav-btn">下一页 →</a>
+        </div>
+
+        <div class="content-area">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('kana')">假名学习</button>
+                <button class="tab" onclick="showTab('vocab')">词汇</button>
+                <button class="tab" onclick="showTab('grammar')">语法</button>
+                <button class="tab" onclick="showTab('listening')">听力</button>
+                <button class="tab" onclick="showTab('practice')">练习</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- 假名学习标签页 -->
+                <div id="kana" class="tab-pane active" style="height: 480px;">
+                    <div class="section-grid">
+                        <!-- あ行/ア行 -->
+                        <div class="mini-card">
+                            <h3>🔤 あ行 / ア行 (a-gyō)</h3>
+                            <div class="kana-comparison">
+                                <div class="hiragana-grid">
+                                    <div class="hiragana-cell" onclick="playSound('あ')">
+                                        <div class="hiragana-char">あ</div>
+                                        <div class="hiragana-romaji">a</div>
+                                        <div class="katakana-char">ア</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('い')">
+                                        <div class="hiragana-char">い</div>
+                                        <div class="hiragana-romaji">i</div>
+                                        <div class="katakana-char">イ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('う')">
+                                        <div class="hiragana-char">う</div>
+                                        <div class="hiragana-romaji">u</div>
+                                        <div class="katakana-char">ウ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('え')">
+                                        <div class="hiragana-char">え</div>
+                                        <div class="hiragana-romaji">e</div>
+                                        <div class="katakana-char">エ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('お')">
+                                        <div class="hiragana-char">お</div>
+                                        <div class="hiragana-romaji">o</div>
+                                        <div class="katakana-char">オ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- か行/カ行 -->
+                        <div class="mini-card">
+                            <h3>🔤 か行 / カ行 (ka-gyō)</h3>
+                            <div class="kana-comparison">
+                                <div class="hiragana-grid">
+                                    <div class="hiragana-cell" onclick="playSound('か')">
+                                        <div class="hiragana-char">か</div>
+                                        <div class="hiragana-romaji">ka</div>
+                                        <div class="katakana-char">カ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('き')">
+                                        <div class="hiragana-char">き</div>
+                                        <div class="hiragana-romaji">ki</div>
+                                        <div class="katakana-char">キ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('く')">
+                                        <div class="hiragana-char">く</div>
+                                        <div class="hiragana-romaji">ku</div>
+                                        <div class="katakana-char">ク</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('け')">
+                                        <div class="hiragana-char">け</div>
+                                        <div class="hiragana-romaji">ke</div>
+                                        <div class="katakana-char">ケ</div>
+                                    </div>
+                                    <div class="hiragana-cell" onclick="playSound('こ')">
+                                        <div class="hiragana-char">こ</div>
+                                        <div class="hiragana-romaji">ko</div>
+                                        <div class="katakana-char">コ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>💡 假名学习小贴士</h4>
+                        <p><strong>发音提示：</strong><br>
+                        • あ/ア：像汉语"啊"，嘴巴自然张开<br>
+                        • い/イ：像汉语"衣"，嘴角向两边拉伸<br>
+                        • う/ウ：嘴唇微圆，不突出<br>
+                        • え/エ：像汉语"诶"的前半部分<br>
+                        • お/オ：像汉语"哦"，嘴巴稍圆<br><br>
+                        
+                        <strong>片假名用途：</strong><br>
+                        • 主要用于外来语、拟声词、强调等<br>
+                        • 发音与平假名相同，只是书写形式不同<br>
+                        • 常见用途：外国地名、人名、外来语<br>
+                        • 例：コーヒー (kōhī) 咖啡、パン (pan) 面包</p>
+                    </div>
+                </div>
+
+                <!-- 词汇标签页 -->
+                <div id="vocab" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>📊 数字 (すうじ - sūji)</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playSound('いち')">
+                                    <div class="vocab-jp">いち</div>
+                                    <div class="vocab-romaji">ichi</div>
+                                    <div class="vocab-cn">1</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('に')">
+                                    <div class="vocab-jp">に</div>
+                                    <div class="vocab-romaji">ni</div>
+                                    <div class="vocab-cn">2</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('さん')">
+                                    <div class="vocab-jp">さん</div>
+                                    <div class="vocab-romaji">san</div>
+                                    <div class="vocab-cn">3</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('よん')">
+                                    <div class="vocab-jp">よん</div>
+                                    <div class="vocab-romaji">yon</div>
+                                    <div class="vocab-cn">4</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('ご')">
+                                    <div class="vocab-jp">ご</div>
+                                    <div class="vocab-romaji">go</div>
+                                    <div class="vocab-cn">5</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('ろく')">
+                                    <div class="vocab-jp">ろく</div>
+                                    <div class="vocab-romaji">roku</div>
+                                    <div class="vocab-cn">6</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('なな')">
+                                    <div class="vocab-jp">なな</div>
+                                    <div class="vocab-romaji">nana</div>
+                                    <div class="vocab-cn">7</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('はち')">
+                                    <div class="vocab-jp">はち</div>
+                                    <div class="vocab-romaji">hachi</div>
+                                    <div class="vocab-cn">8</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('きゅう')">
+                                    <div class="vocab-jp">きゅう</div>
+                                    <div class="vocab-romaji">kyuu</div>
+                                    <div class="vocab-cn">9</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('じゅう')">
+                                    <div class="vocab-jp">じゅう</div>
+                                    <div class="vocab-romaji">juu</div>
+                                    <div class="vocab-cn">10</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>🗣️ 日常用语 & 人物</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playSound('こんにちは')">
+                                    <div class="vocab-jp">こんにちは</div>
+                                    <div class="vocab-romaji">konnichiwa</div>
+                                    <div class="vocab-cn">你好</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('ありがとう')">
+                                    <div class="vocab-jp">ありがとう</div>
+                                    <div class="vocab-romaji">arigatou</div>
+                                    <div class="vocab-cn">谢谢</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('さようなら')">
+                                    <div class="vocab-jp">さようなら</div>
+                                    <div class="vocab-romaji">sayounara</div>
+                                    <div class="vocab-cn">再见</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('すみません')">
+                                    <div class="vocab-jp">すみません</div>
+                                    <div class="vocab-romaji">sumimasen</div>
+                                    <div class="vocab-cn">对不起</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('おねがいします')">
+                                    <div class="vocab-jp">おねがいします</div>
+                                    <div class="vocab-romaji">onegaishimasu</div>
+                                    <div class="vocab-cn">请</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('はい')">
+                                    <div class="vocab-jp">はい</div>
+                                    <div class="vocab-romaji">hai</div>
+                                    <div class="vocab-cn">是</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('いいえ')">
+                                    <div class="vocab-jp">いいえ</div>
+                                    <div class="vocab-romaji">iie</div>
+                                    <div class="vocab-cn">不是</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('わたし')">
+                                    <div class="vocab-jp">わたし</div>
+                                    <div class="vocab-romaji">watashi</div>
+                                    <div class="vocab-cn">我</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('あなた')">
+                                    <div class="vocab-jp">あなた</div>
+                                    <div class="vocab-romaji">anata</div>
+                                    <div class="vocab-cn">你</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playSound('ともだち')">
+                                    <div class="vocab-jp">ともだち</div>
+                                    <div class="vocab-romaji">tomodachi</div>
+                                    <div class="vocab-cn">朋友</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>💡 记忆技巧</h4>
+                        <p>• 数字4和7有两种读法：よん/し、なな/しち<br>
+                        • 日常用语要配合鞠躬使用更礼貌<br>
+                        • すみません既可道歉也可用来引起注意</p>
+                    </div>
+                </div>
+
+                <!-- 语法标签页 -->
+                <div id="grammar" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>📘 名词 + です (です - desu)</h3>
+                            <div class="grammar-section">
+                                <h4>🎯 基本句型</h4>
+                                <div class="grammar-box">
+                                    <strong>名词 + です</strong><br>
+                                    用于礼貌地陈述事实或身份
+                                </div>
+                                
+                                <h4>📖 例句详解</h4>
+                                <div class="example-grid">
+                                    <div class="example-item">
+                                        <div class="example-jp">わたしは学生です。</div>
+                                        <div class="example-romaji">watashi wa gakusei desu</div>
+                                        <div class="example-cn">我是学生。</div>
+                                    </div>
+                                    <div class="example-item">
+                                        <div class="example-jp">あなたは先生です。</div>
+                                        <div class="example-romaji">anata wa sensei desu</div>
+                                        <div class="example-cn">您是老师。</div>
+                                    </div>
+                                    <div class="example-item">
+                                        <div class="example-jp">わたしは中国人です。</div>
+                                        <div class="example-romaji">watashi wa chūgokujin desu</div>
+                                        <div class="example-cn">我是中国人。</div>
+                                    </div>
+                                    <div class="example-item">
+                                        <div class="example-jp">これは本です。</div>
+                                        <div class="example-romaji">kore wa hon desu</div>
+                                        <div class="example-cn">这是书。</div>
+                                    </div>
+                                </div>
+                                
+                                <h4>🔍 语法要点</h4>
+                                <ul class="grammar-points">
+                                    <li><strong>です</strong>：礼貌的结尾词，相当于中文的"是"</li>
+                                    <li><strong>は</strong>：提示主题，读作"wa"</li>
+                                    <li><strong>わたし</strong>：我（礼貌用语）</li>
+                                    <li><strong>あなた</strong>：你（注意：对长辈用"您"）</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 听力标签页 -->
+                <div id="listening" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>🎧 假名发音练习</h3>
+                            <div class="listening-section">
+                                <p>点击播放按钮，边听边跟读！</p>
+                                
+                                <h4>あ行发音</h4>
+                                <div class="listening-grid">
+                                    <button class="listening-btn" onclick="playSound('あ')">あ - a</button>
+                                    <button class="listening-btn" onclick="playSound('い')">い - i</button>
+                                    <button class="listening-btn" onclick="playSound('う')">う - u</button>
+                                    <button class="listening-btn" onclick="playSound('え')">え - e</button>
+                                    <button class="listening-btn" onclick="playSound('お')">お - o</button>
+                                </div>
+                                
+                                <h4>か行发音</h4>
+                                <div class="listening-grid">
+                                    <button class="listening-btn" onclick="playSound('か')">か - ka</button>
+                                    <button class="listening-btn" onclick="playSound('き')">き - ki</button>
+                                    <button class="listening-btn" onclick="playSound('く')">く - ku</button>
+                                    <button class="listening-btn" onclick="playSound('け')">け - ke</button>
+                                    <button class="listening-btn" onclick="playSound('こ')">こ - ko</button>
+                                </div>
+                                
+                                <h4>🔍 听力测试</h4>
+                                <div class="listening-test">
+                                    <p>听音选择正确的假名：</p>
+                                    <div class="test-options">
+                                        <button class="test-btn" onclick="checkAnswer(this, true)">あ</button>
+                                        <button class="test-btn" onclick="checkAnswer(this, false)">い</button>
+                                        <button class="test-btn" onclick="checkAnswer(this, false)">う</button>
+                                    </div>
+                                    <div id="test-result" style="margin-top: 10px; font-weight: bold;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 练习标签页 -->
+                <div id="practice" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>✍️ 跟读练习：自我介绍</h3>
+                            <div class="practice-section">
+                                <p><strong>🎯 今天的目标：</strong>学会用日语做最基本的自我介绍</p>
+                                
+                                <div class="intro-template">
+                                    <h4>📋 标准自我介绍模板：</h4>
+                                    <div class="intro-example">
+                                        <div class="jp-line">
+                                            <strong>はじめまして。</strong>
+                                            <button class="audio-btn" onclick="playSound('はじめまして')">🔊</button>
+                                        </div>
+                                        <div class="jp-line">
+                                            <strong>わたしは [你的名字] です。</strong>
+                                            <button class="audio-btn" onclick="playSound('わたしは')">🔊</button>
+                                        </div>
+                                        <div class="jp-line">
+                                            <strong>[国籍] です。</strong>
+                                            <button class="audio-btn" onclick="playSound('中国人です')">🔊</button>
+                                        </div>
+                                        <div class="jp-line">
+                                            <strong>よろしくおねがいします。</strong>
+                                            <button class="audio-btn" onclick="playSound('よろしくおねがいします')">🔊</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="romaji-guide">
+                                        <p><strong>罗马音指南：</strong></p>
+                                        <ul>
+                                            <li>はじめまして (ha-ji-me-ma-shi-te) - 初次见面</li>
+                                            <li>わたしは (wa-ta-shi-wa) - 我是</li>
+                                            <li>です (de-su) - 是</li>
+                                            <li>よろしくおねがいします (yo-ro-shi-ku-o-ne-gai-shi-ma-su) - 请多关照</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mini-card">
+                            <h3>🎭 趣味绕口令</h3>
+                            <div class="practice-section">
+                                <p><strong>🎪 今日绕口令挑战：</strong>用今天学的假名来练习发音！</p>
+                                
+                                <div class="tongue-twisters">
+                                    <div class="twister-item">
+                                        <h4>🍎 初级挑战 - あいうえお</h4>
+                                        <div class="twister-text">
+                                            <strong>あいうえお、おえういあ</strong>
+                                            <button class="audio-btn" onclick="playSound('あいうえおおえういあ')">🔊</button>
+                                        </div>
+                                        <div class="twister-tips">
+                                            <small>💡 提示：慢慢读，注意每个假名的清晰度</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="twister-item">
+                                        <h4>🌸 中级挑战 - かきくけこ</h4>
+                                        <div class="twister-text">
+                                            <strong>かきくけこ、こけくきか</strong>
+                                            <button class="audio-btn" onclick="playSound('かきくけここけくきか')">🔊</button>
+                                        </div>
+                                        <div class="twister-tips">
+                                            <small>💡 提示：k音要清晰，不要太重</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="twister-item">
+                                        <h4>🎌 高级挑战 - 混合练习</h4>
+                                        <div class="twister-text">
+                                            <strong>あか、きこ、うけ、えお</strong>
+                                            <button class="audio-btn" onclick="playSound('あかきこうけえお')">🔊</button>
+                                        </div>
+                                        <div class="twister-tips">
+                                            <small>💡 提示：先慢后快，挑战3遍不咬舌头！</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="twister-game">
+                                    <h4>🎯 绕口令游戏</h4>
+                                    <p>选择难度，开始挑战：</p>
+                                    <div class="game-controls">
+                                        <button class="audio-btn" onclick="startTwister('easy')">🟢 简单模式</button>
+                                        <button class="audio-btn" onclick="startTwister('medium')">🟡 中等模式</button>
+                                        <button class="audio-btn" onclick="startTwister('hard')">🔴 困难模式</button>
+                                    </div>
+                                    <div id="twister-result" style="margin-top: 15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mini-card">
+                            <h3>🎯 今日小测验</h3>
+                            <div class="practice-section">
+                                <p>测试你对Day 1内容的掌握程度：</p>
+                                
+                                <div class="quiz-section">
+                                    <div class="quiz-item">
+                                        <strong>Q1:</strong> "学生"的日语发音是？
+                                        <div class="quiz-options">
+                                            <label><input type="radio" name="q1" value="a"> がくせい</label>
+                                            <label><input type="radio" name="q1" value="b"> せんせい</label>
+                                            <label><input type="radio" name="q1" value="c"> ともだち</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="quiz-item">
+                                        <strong>Q2:</strong> "我是中国人"用日语怎么说？
+                                        <div class="quiz-options">
+                                            <label><input type="radio" name="q2" value="a"> わたしは学生です。</label>
+                                            <label><input type="radio" name="q2" value="b"> わたしは中国人です。</label>
+                                            <label><input type="radio" name="q2" value="c"> わたしはともだちです。</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn" onclick="submitQuiz()">提交答案</button>
+                                    <div id="quiz-result" style="margin-top: 15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 标签页切换 - 优化流畅度
+        function showTab(tabName) {
+            // 防止快速重复点击
+            if (window.tabSwitching) return;
+            window.tabSwitching = true;
+            
+            // 获取目标元素
+            const targetPane = document.getElementById(tabName);
+            const clickedTab = event.target;
+            
+            // 如果点击的是当前激活的标签，直接返回
+            if (targetPane.classList.contains('active')) {
+                window.tabSwitching = false;
+                return;
+            }
+            
+            // 使用 requestAnimationFrame 优化重排
+            requestAnimationFrame(() => {
+                // 隐藏所有标签页
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('active');
+                });
+                
+                // 移除所有活动标签
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // 强制重排后再显示新标签页
+                requestAnimationFrame(() => {
+                    // 显示选中的标签页
+                    targetPane.classList.add('active');
+                    clickedTab.classList.add('active');
+                    
+                    // 重置切换状态
+                    setTimeout(() => {
+                        window.tabSwitching = false;
+                    }, 300);
+                });
+            });
+        }
+
+        // 音频播放功能
+        function playSound(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playAllSounds() {
+            const sounds = ['あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'いち', 'に', 'さん', 'こんにちは'];
+            let index = 0;
+            
+            function playNext() {
+                if (index < sounds.length) {
+                    playSound(sounds[index]);
+                    index++;
+                    setTimeout(playNext, 800);
+                }
+            }
+            playNext();
+        }
+
+        // 测试功能
+        function startQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            const questions = [
+                { q: 'あ', options: ['a', 'i', 'u', 'e'], correct: 0 },
+                { q: 'か', options: ['ka', 'ki', 'ku', 'ke'], correct: 0 },
+                { q: 'い', options: ['a', 'i', 'u', 'e'], correct: 1 }
+            ];
+            
+            let currentQ = 0;
+            
+            function showQuestion() {
+                if (currentQ >= questions.length) {
+                    quizContainer.innerHTML = '<p style="color: #667eea;">🎉 完成！继续学习吧！</p>';
+                    return;
+                }
+                
+                const q = questions[currentQ];
+                quizContainer.innerHTML = `
+                    <p style="font-size: 2rem; margin-bottom: 10px;">${q.q}</p>
+                    <p style="margin-bottom: 15px;">选择正确的罗马音：</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        ${q.options.map((opt, idx) => 
+                            `<button class="audio-btn" onclick="checkAnswer(${idx})">${opt}</button>`
+                        ).join('')}
+                    </div>
+                `;
+                playSound(q.q);
+            }
+            
+            window.checkAnswer = function(choice) {
+                const q = questions[currentQ];
+                if (choice === q.correct) {
+                    quizContainer.innerHTML = '<p style="color: #4caf50;">✅ 正确！</p>';
+                    currentQ++;
+                    setTimeout(showQuestion, 1000);
+                } else {
+                    quizContainer.innerHTML = '<p style="color: #f44336;">❌ 再试一次</p>';
+                    setTimeout(showQuestion, 1000);
+                }
+            };
+            
+            showQuestion();
+        }
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '1' && e.key <= '5') {
+                const tabs = document.querySelectorAll('.tab');
+                const tabIndex = parseInt(e.key) - 1;
+                if (tabs[tabIndex]) {
+                    tabs[tabIndex].click();
+                }
+            }
+        });
+
+        // 听力测试
+        function checkAnswer(button, isCorrect) {
+            const resultDiv = document.getElementById('test-result');
+            if (isCorrect) {
+                resultDiv.innerHTML = '<span style="color: #4CAF50;">✅ 正确！很好！</span>';
+                button.style.background = '#4CAF50';
+                button.style.color = 'white';
+            } else {
+                resultDiv.innerHTML = '<span style="color: #f44336;">❌ 再试试看！</span>';
+                button.style.background = '#f44336';
+                button.style.color = 'white';
+            }
+            
+            setTimeout(() => {
+                resultDiv.innerHTML = '';
+                button.style.background = '';
+                button.style.color = '';
+            }, 2000);
+        }
+
+        // 抄写练习检查
+        function checkCopyPractice() {
+            const textarea = document.getElementById('copy-practice');
+            const feedback = document.getElementById('copy-feedback');
+            const text = textarea.value.trim();
+            
+            if (!text) {
+                feedback.innerHTML = '<span style="color: #f44336;">请先抄写模板内容！</span>';
+                return;
+            }
+            
+            const hasTemplate = text.includes('はじめまして') && text.includes('です');
+            
+            if (hasTemplate) {
+                feedback.innerHTML = '<span style="color: #4caf50;">✅ 很好！你已经学会了基本的日语自我介绍！</span>';
+            } else {
+                feedback.innerHTML = '<span style="color: #ff9800;">⚠️ 请按照模板抄写，注意每个假名的写法！</span>';
+            }
+        }
+
+        // 快速测试
+        function submitQuiz() {
+            const q1Answer = document.querySelector('input[name="q1"]:checked');
+            const q2Answer = document.querySelector('input[name="q2"]:checked');
+            const resultDiv = document.getElementById('quiz-result');
+            
+            if (!q1Answer || !q2Answer) {
+                resultDiv.innerHTML = '<span style="color: #f44336;">请回答所有问题！</span>';
+                return;
+            }
+            
+            let score = 0;
+            if (q1Answer.value === 'a') score++;
+            if (q2Answer.value === 'b') score++;
+            
+            const percentage = (score / 2) * 100;
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 完美！你对Day 1的内容掌握得很好！';
+            } else if (percentage === 50) {
+                message = '📖 不错！再复习一下就能掌握得更好！';
+            } else {
+                message = '💪 继续加油！多练习几次就会更熟练！';
+            }
+            
+            resultDiv.innerHTML = `<span style="color: ${percentage === 100 ? '#4CAF50' : '#ff9800'}">
+                ${message} (得分: ${score}/2)
+            </span>`;
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加一些动画效果
+            const cards = document.querySelectorAll('.mini-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
