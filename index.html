@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统日语学习</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <script src="lessons-config.js"></script>
+    <style>
+        /* 极致美观的首页设计 - 现代极简风格 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #ffd3e1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            width: 100%;
+            max-width: 1100px;
+            min-height: 95vh;
+            height: auto;
+            max-height: none;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            animation: containerEntry 0.8s ease-out;
+        }
+
+        @keyframes containerEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf, #b8e6b8);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 15px;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .description {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.8;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .progress-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .progress-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .lessons-container {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+            overflow: visible;
+        }
+
+        .lessons-grid {
+            flex: 1 1 auto;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            min-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(102, 126, 234, 0.3) transparent;
+        }
+
+        .lessons-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .lessons-grid::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .lessons-grid::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 2px;
+        }
+
+        .lessons-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.5);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            color: #7dd3c0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .pagination-btn:hover {
+            background: rgba(125, 211, 192, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            border-color: transparent;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pagination-info {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin: 0 10px;
+        }
+
+        .lesson-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            will-change: transform;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .lesson-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(125, 211, 192, 0.3);
+            border-color: rgba(125, 211, 192, 0.3);
+        }
+
+        .lesson-card.available {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .lesson-card.coming-soon {
+            opacity: 0.7;
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        .lesson-number {
+            font-size: 0.85rem;
+            color: #7dd3c0;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .lesson-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .lesson-description {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+
+        .lesson-status {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 18px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .lesson-status.available {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .lesson-status.coming-soon {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 25px;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .quick-actions h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+
+
+        .quick-tools {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .tool-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tool-btn .icon {
+            font-size: 1.2em;
+        }
+
+        .tool-btn .label {
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .nav-btn.primary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.primary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            border: none;
+            cursor: pointer;
+            min-width: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn.secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            box-shadow: none;
+        }
+
+        .nav-btn.secondary:hover {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px 40px;
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .app-container {
+                margin: 0;
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+                width: 100%;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .progress-overview {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .lesson-card {
+                padding: 20px;
+                height: 160px;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                padding: 0 20px 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+
+            .current-lesson {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .lesson-info {
+                align-items: center;
+            }
+
+            .quick-tools {
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .tool-btn {
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .lessons-grid {
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .lesson-card {
+                padding: 18px;
+                height: 150px;
+            }
+
+            .progress-overview {
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .nav-btn {
+                max-width: none;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lesson-card {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .lesson-card:nth-child(1) { animation-delay: 0.1s; }
+        .lesson-card:nth-child(2) { animation-delay: 0.2s; }
+        .lesson-card:nth-child(3) { animation-delay: 0.3s; }
+        .lesson-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="app-container loading">
+        <div class="header">
+            <h1>🎌 日语学习小屋</h1>
+            <p class="subtitle">从这里开始您的日语之旅</p>
+            <p class="description">
+                循序渐进学习日语平假名、词汇、语法和日常对话，
+                在轻松愉快的氛围中逐步建立日语基础能力。
+            </p>
+        </div>
+
+
+
+        <div class="lessons-container">
+            <div class="lessons-grid" id="lessons-grid">
+                <!-- 课程卡片将通过JavaScript动态生成 -->
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- 分页控制将通过JavaScript动态生成 -->
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h3>✨ 一起探索日语的美妙世界</h3>
+            <div class="action-buttons">
+                <div class="quick-tools">
+                    <button class="tool-btn" onclick="showTips()" title="学习技巧">
+                        <span class="icon">💡</span>
+                        <span class="label">技巧</span>
+                    </button>
+                    <button class="tool-btn" onclick="showAllLessons()" title="查看所有课程">
+                        <span class="icon">📚</span>
+                        <span class="label">全部</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">
+                📱 建议每天学习20-30分钟，贵在坚持 | 
+                🎧 使用耳机获得最佳语音体验 | 
+                💾 学习是一场马拉松，享受过程最重要
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 课程数据从lessons-config.js加载
+        let lessons = [];
+
+        // 初始化页面
+        function initializePage() {
+            // 从配置加载课程数据
+            if (typeof lessonsData !== 'undefined') {
+                lessons = lessonsData;
+            } else {
+                // 备用数据
+                lessons = [
+                    { day: 1, title: "平假名基础", description: "学习あ行到お行的平假名发音和书写", available: true, url: "day1.html" },
+                    { day: 2, title: "平假名进阶", description: "学习か行到と行的平假名和基础词汇", available: true, url: "day2.html" },
+                    { day: 3, title: "日常问候", description: "学习基本的日语问候语和自我介绍", available: true, url: "day3.html" },
+                    { day: 4, title: "数字与时间", description: "掌握日语数字表达和时间说法", available: true, url: "day4.html" },
+                    { day: 5, title: "购物用语", description: "学习在商店和超市的实用对话", available: true, url: "day5.html" },
+                    { day: 6, title: "餐厅对话", description: "掌握点餐、询问和结账的餐厅用语", available: true, url: "day6.html" },
+                    { day: 7, title: "交通工具", description: "学习乘坐地铁、公交和出租车的表达", available: true, url: "day7.html" },
+                    { day: 8, title: "方向与位置", description: "掌握问路和描述位置的实用表达", available: true, url: "day8.html" },
+                    { day: 9, title: "天气与季节", description: "学习描述天气和四季的词汇表达", available: true, url: "day9.html" },
+                    { day: 10, title: "兴趣爱好", description: "学习表达个人爱好和兴趣的词汇", available: true, url: "day10.html" }
+                ];
+            }
+            
+            // 显示课程列表
+            renderLessons();
+        }
+
+        // 分页功能
+        let currentPage = 1;
+        const itemsPerPage = 6;
+
+        function renderLessons() {
+            console.log('renderLessons被调用');
+            const lessonsGrid = document.getElementById('lessons-grid');
+            if (!lessonsGrid) {
+                console.error('找不到lessons-grid元素');
+                return;
+            }
+            lessonsGrid.innerHTML = '';
+
+            // 使用配置中的课程数据
+            const availableLessons = lessons.filter(lesson => lesson.available);
+            console.log('开始渲染课程，共' + availableLessons.length + '个课程');
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, availableLessons.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const card = createLessonCard(availableLessons[i]);
+                lessonsGrid.appendChild(card);
+            }
+
+            // 添加"更多课程"占位卡片（只在最后一页显示）
+            if (currentPage === Math.ceil(availableLessons.length / itemsPerPage)) {
+                const moreCard = createMoreLessonsCard();
+                lessonsGrid.appendChild(moreCard);
+            }
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            const lessonsGrid = document.getElementById('lessons-grid');
+            const availableLessons = lessons.filter(lesson => lesson.available);
+            const totalPages = Math.ceil(availableLessons.length / itemsPerPage);
+
+            pagination.innerHTML = '';
+
+            // 上一页按钮
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.textContent = '上一页';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderLessons();
+                    lessonsGrid.scrollTop = 0;
+                }
+            };
+            pagination.appendChild(prevBtn);
+
+            // 页码信息
+            const info = document.createElement('span');
+            info.className = 'pagination-info';
+            info.textContent = `${currentPage} / ${totalPages}`;
+            pagination.appendChild(info);
+
+            // 页码按钮
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage || 
+                    i === 1 || 
+                    i === totalPages || 
+                    (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = 'pagination-btn';
+                    if (i === currentPage) pageBtn.classList.add('active');
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => {
+                        currentPage = i;
+                        renderLessons();
+                        lessonsGrid.scrollTop = 0;
+                    };
+                    pagination.appendChild(pageBtn);
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    const dots = document.createElement('span');
+                    dots.className = 'pagination-info';
+                    dots.textContent = '...';
+                    pagination.appendChild(dots);
+                }
+            }
+
+            // 下一页按钮
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.textContent = '下一页';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderLessons();
+                    lessonsGrid.scrollTop = 0;
+                }
+            };
+            pagination.appendChild(nextBtn);
+        }
+
+        // 创建单个课程卡片
+        function createLessonCard(lesson) {
+            const card = document.createElement('a');
+            card.className = 'lesson-card';
+            card.href = lesson.url;
+            
+            if (!lesson.available) {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showComingSoonMessage(lesson.day);
+                });
+            }
+
+            const statusText = lesson.available ? '开始学习' : '敬请期待';
+            const statusClass = lesson.available ? 'available' : 'status-not-started';
+            const dayLabel = lesson.available ? `Day ${lesson.day}` : '即将开放';
+
+            card.innerHTML = `
+                <div class="lesson-number">${dayLabel}</div>
+                <div class="lesson-title">${lesson.title}</div>
+                <div class="lesson-description">${lesson.description}</div>
+                <div class="lesson-status ${statusClass}">${statusText}</div>
+            `;
+
+            return card;
+        }
+
+        // 创建"更多课程"占位卡片
+        function createMoreLessonsCard() {
+            const card = document.createElement('a');
+            card.className = 'lesson-card';
+            card.href = '#';
+            card.style.opacity = '0.6';
+            
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                showComingSoonMessage('3-10');
+            });
+
+            card.innerHTML = `
+                <div class="lesson-number">即将推出</div>
+                <div class="lesson-title">更多课程</div>
+                <div class="lesson-description">
+                    Day 3-10课程正在精心准备中，包含平假名完整学习、片假名基础、日常对话等实用内容。
+                </div>
+                <div class="lesson-status status-not-started">敬请期待</div>
+            `;
+
+            return card;
+        }
+
+
+
+        // 显示即将开放消息
+        function showComingSoonMessage(day) {
+            showToast(`第${day}天课程正在精心准备中，敬请期待！`);
+        }
+
+        // 页面加载动画 - 修复版
+        window.addEventListener('load', function() {
+            const appContainer = document.querySelector('.app-container');
+            if (appContainer) {
+                appContainer.classList.remove('loading');
+                console.log('加载动画已移除');
+            } else {
+                console.error('找不到app-container元素');
+            }
+        });
+
+        // 显示Toast提示
+        function showToast(message, duration = 3000) {
+            // 移除已存在的toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #333;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: toastIn 0.3s ease-out;
+            `;
+
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes toastIn {
+                    from { opacity: 0; transform: translate(-50%, -20px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+                @keyframes toastOut {
+                    from { opacity: 1; transform: translate(-50%, 0); }
+                    to { opacity: 0; transform: translate(-50%, -20px); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, duration);
+        }
+
+
+
+        // 学习技巧
+        function showTips() {
+            const tips = [
+                "🎯 每天一点点，坚持比速度更重要",
+                "🗣️ 大胆开口说，犯错是学习的一部分",
+                "📱 把日语融入生活，看到什么读什么",
+                "📝 写下喜欢的日语单词，建立自己的词库",
+                "🎵 听日语歌、看动漫，让学习变得有趣"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            showToast(`💡 ${randomTip}`);
+        }
+
+        function showAllLessons() {
+            // 滚动到课程网格区域
+            const lessonsGrid = document.getElementById('lessons-grid');
+            if (lessonsGrid) {
+                lessonsGrid.scrollIntoView({ behavior: 'smooth' });
+                
+                // 添加高亮效果
+                lessonsGrid.style.animation = 'pulse 0.5s ease-in-out';
+                setTimeout(() => {
+                    lessonsGrid.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // 动态更新当前课程显示
+        function updateCurrentLessonDisplay() {
+            const currentLesson = lessons.find(l => l.status === 'current') || lessons[0];
+            const currentLessonEl = document.querySelector('.current-lesson');
+            if (currentLessonEl) {
+                const dayBadge = currentLessonEl.querySelector('.day-badge');
+                const lessonTitle = currentLessonEl.querySelector('.lesson-title');
+                const continueBtn = currentLessonEl.querySelector('.nav-btn.primary');
+                
+                if (dayBadge) dayBadge.textContent = `Day ${currentLesson.day}`;
+                if (lessonTitle) lessonTitle.textContent = currentLesson.title;
+                if (continueBtn) {
+                    continueBtn.href = currentLesson.url;
+                    continueBtn.textContent = currentLesson.status === 'completed' ? '🔄 复习' : '🎯 继续学习';
+                }
+            }
+        }
+
+        // 检测浏览器兼容性
+        function checkCompatibility() {
+            const features = {
+                '语音合成': 'speechSynthesis' in window,
+                '本地存储': typeof(Storage) !== 'undefined',
+                '触摸事件': 'ontouchstart' in window
+            };
+
+            let unsupported = [];
+            for (let feature in features) {
+                if (!features[feature]) {
+                    unsupported.push(feature);
+                }
+            }
+
+            if (unsupported.length > 0) {
+                console.warn('不支持的特性：', unsupported);
+            }
+        }
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM加载完成');
+            checkCompatibility();
+            
+            // 立即移除loading类，确保内容可见
+            const appContainer = document.querySelector('.app-container');
+            if (appContainer) {
+                appContainer.classList.remove('loading');
+                console.log('加载类已提前移除');
+            }
+            
+            // 初始化页面
+            initializePage();
+            
+            // 添加键盘导航支持
+            document.querySelectorAll('.lesson-card, .action-btn').forEach(element => {
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+        });
+
+        // 防止重复点击
+        let isNavigating = false;
+        document.querySelectorAll('a[href^="day"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (isNavigating) {
+                    e.preventDefault();
+                    return;
+                }
+                isNavigating = true;
+                
+                // 添加加载状态
+                this.style.opacity = '0.7';
+                this.style.pointerEvents = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
