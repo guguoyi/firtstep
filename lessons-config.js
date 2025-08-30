@@ -25,10 +25,10 @@ const lessonsData = [
     },
     {
         day: 4,
-        title: "敬请期待",
-        description: "更多精彩的日语学习内容正在精心准备中...<br>💡 建议先完成Day 1-2的基础学习<br>🌸 循序渐进，享受学习过程",
-        url: "#",
-        available: false
+        title: "平假名ま行+や行+ら行",
+        description: "🔤 学习まみむめも、やゆよ、らりるれろ发音和书写<br>🎨 词汇：颜色（红、蓝、黑、白、黄）<br>📘 语法：〜の（我的书）<br>✍️ 写5句“这是〜”句子",
+        url: "day4.html",
+        available: true
     },
     {
         day: 5,
