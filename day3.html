@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日语学习 Day 3 - 平假名进阶</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         * {
             margin: 0;
@@ -901,28 +902,22 @@
                 document.body.removeChild(toast);
             }, 1000);
 
-            // 使用Web Speech API播放日语发音
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(character);
-                utterance.lang = 'ja-JP'; // 日语
-                utterance.rate = 0.8;     // 稍慢语速
-                utterance.pitch = 1.0;    // 标准音调
-                
-                // 取消之前的语音
-                speechSynthesis.cancel();
-                speechSynthesis.speak(utterance);
+            // 使用ResponsiveVoice.js播放日语发音
+            if (typeof responsiveVoice !== 'undefined') {
+                responsiveVoice.speak(character, "Japanese Female", {
+                    pitch: 0.9,    // 降低音调使声音更柔和
+                    rate: 0.75,    // 降低语速提升清晰度
+                    volume: 0.9   // 降低音量避免尖锐
+                });
             } else {
-                // 备用方案：创建音频元素
-                try {
-                    const audio = new Audio();
-                    // 使用Google TTS作为备用
-                    const text = encodeURIComponent(character);
-                    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${text}&tl=ja&client=tw-ob`;
-                    audio.play().catch(e => {
-                        console.log('音频播放失败，使用视觉提示');
-                    });
-                } catch (error) {
-                    console.log('备用音频方案也失败');
+                // 备用方案：使用Web Speech API
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(character);
+                    utterance.lang = 'ja-JP';
+                    utterance.rate = 0.8;
+                    utterance.pitch = 1.0;
+                    speechSynthesis.cancel();
+                    speechSynthesis.speak(utterance);
                 }
             }
         }
@@ -955,24 +950,22 @@
                 document.body.removeChild(toast);
             }, 1000);
 
-            // 播放日语发音
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'ja-JP';
-                utterance.rate = 0.8;
-                utterance.pitch = 1.0;
-                speechSynthesis.cancel();
-                speechSynthesis.speak(utterance);
+            // 使用ResponsiveVoice.js播放日语发音
+            if (typeof responsiveVoice !== 'undefined') {
+                responsiveVoice.speak(word, "Japanese Female", {
+                    pitch: 0.9,    // 降低音调使声音更柔和
+                    rate: 0.75,    // 降低语速提升清晰度
+                    volume: 0.9   // 降低音量避免尖锐
+                });
             } else {
-                try {
-                    const audio = new Audio();
-                    const text = encodeURIComponent(word);
-                    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${text}&tl=ja&client=tw-ob`;
-                    audio.play().catch(e => {
-                        console.log('词汇音频播放失败');
-                    });
-                } catch (error) {
-                    console.log('备用词汇音频方案失败');
+                // 备用方案：使用Web Speech API
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(word);
+                    utterance.lang = 'ja-JP';
+                    utterance.rate = 0.8;
+                    utterance.pitch = 1.0;
+                    speechSynthesis.cancel();
+                    speechSynthesis.speak(utterance);
                 }
             }
         }
