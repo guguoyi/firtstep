@@ -18,10 +18,10 @@ const lessonsData = [
     },
     {
         day: 3,
-        title: "敬请期待",
-        description: "更多精彩的日语学习内容正在精心准备中...<br>💡 建议先完成Day 1-2的基础学习<br>🌸 循序渐进，享受学习过程",
-        url: "#",
-        available: false
+        title: "平假名な行+は行",
+        description: "🔤 学习なにぬねの、はひふへほ发音和书写<br>📖 词汇：日常用品（桌子、椅子、书、笔）<br>📘 语法：これ/それ/あれ（这个/那个/那个）<br>🎯 物品识别+位置描述<br>✍️ 写5句物品介绍",
+        available: true,
+        url: "day3.html"
     },
     {
         day: 4,
