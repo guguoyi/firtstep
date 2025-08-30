@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日语学习 Day 1 - 平假名基础</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         * {
             margin: 0;
@@ -1380,14 +1381,14 @@
             });
         }
 
-        // 音频播放功能
+        // 音频播放功能 - 使用 ResponsiveVoice.js
+        
         function playSound(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ja-JP';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
-            }
+            responsiveVoice.speak(text, "Japanese Female", {
+                pitch: 1,
+                rate: 0.8,
+                volume: 1
+            });
         }
 
         function playAllSounds() {
