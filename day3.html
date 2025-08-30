@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语学习 Day 3 - 平假名进阶</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #ffd3e1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            width: 100%;
+            max-width: 1200px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: containerEntry 0.8s ease-out;
+        }
+
+        @keyframes containerEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf, #b8e6b8);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            opacity: 0.9;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: hidden;
+            padding: 0;
+            position: relative;
+            contain: layout style;
+            height: 100%;
+        }
+
+        .tab-pane {
+            display: none;
+            height: 100%;
+            min-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            height: 100%;
+        }
+
+        .mini-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            contain: layout style;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.15);
+        }
+
+        .mini-card h3 {
+            color: #7dd3c0;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* 平假名网格 */
+        .hiragana-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+            gap: 12px;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .hiragana-cell {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px 8px;
+            min-height: 75px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            will-change: transform;
+        }
+
+        .hiragana-cell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.2);
+            border-color: rgba(125, 211, 192, 0.4);
+        }
+
+        .hiragana-char {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+            line-height: 1;
+        }
+
+        .hiragana-romaji {
+            font-size: 0.75rem;
+            color: #7dd3c0;
+            font-weight: 600;
+            font-family: 'Courier New', 'Consolas', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        /* 物品词汇网格 */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .vocab-cell {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 90px;
+        }
+
+        .vocab-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.2);
+            border-color: rgba(125, 211, 192, 0.4);
+        }
+
+        .vocab-jp {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .vocab-cn {
+            font-size: 0.85rem;
+            color: #667eea;
+            margin-bottom: 3px;
+        }
+
+        .vocab-romaji {
+            font-size: 0.7rem;
+            color: #666;
+            font-family: 'Courier New', 'Consolas', monospace;
+        }
+
+        /* 语法区域 */
+        .grammar-section {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .grammar-example {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .grammar-box {
+            background: white;
+            border: 1px solid #e0e6ff;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* 听力区域 */
+        .listening-section {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        /* 练习区域 */
+        .practice-section {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e0e6ff;
+        }
+
+        .practice-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e6ff;
+            border-radius: 8px;
+            font-family: inherit;
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+
+        .practice-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #7dd3c0, #a8e6cf);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 192, 0.3);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(125, 211, 192, 0.1), rgba(168, 230, 207, 0.1));
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #7dd3c0;
+        }
+
+        .tip-box h4 {
+            color: #2d3436;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .tip-box p {
+            color: #2d3436;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 问答练习 */
+        .qa-practice {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(125, 211, 192, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .qa-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        }
+
+        .qa-item:last-child {
+            border-bottom: none;
+        }
+
+        .qa-number {
+            background: #7dd3c0;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .qa-content {
+            flex: 1;
+        }
+
+        .qa-jp {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .qa-cn {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .hiragana-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .tab-pane {
+                padding: 15px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .header {
+                padding: 10px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.1rem;
+            }
+            
+            .tab {
+                padding: 8px 4px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>🔤 日语学习 Day 3</h1>
+            <p>な行・は行平假名 & 日常物品</p>
+        </div>
+
+        <div class="nav-bar">
+            <a href="day2.html" class="nav-btn">← 上一页</a>
+            <span style="font-weight: bold; color: #ff6b6b;">第 3 天</span>
+            <a href="index.html" class="nav-btn">🏠 首页</a>
+        </div>
+
+        <div class="content-area">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('kana')">假名学习</button>
+                <button class="tab" onclick="showTab('vocab')">物品词汇</button>
+                <button class="tab" onclick="showTab('grammar')">语法学习</button>
+                <button class="tab" onclick="showTab('practice')">问答练习</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- 假名学习标签页 -->
+                <div id="kana" class="tab-pane active">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>🔤 な行 / ナ行 - 平假名 & 片假名</h3>
+                            <div class="hiragana-grid">
+                                <div class="hiragana-cell" onclick="playSound('な')">
+                                    <div class="hiragana-char">な</div>
+                                    <div class="hiragana-romaji">na</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ナ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('に')">
+                                    <div class="hiragana-char">に</div>
+                                    <div class="hiragana-romaji">ni</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ニ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('ぬ')">
+                                    <div class="hiragana-char">ぬ</div>
+                                    <div class="hiragana-romaji">nu</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ヌ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('ね')">
+                                    <div class="hiragana-char">ね</div>
+                                    <div class="hiragana-romaji">ne</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ネ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('の')">
+                                    <div class="hiragana-char">の</div>
+                                    <div class="hiragana-romaji">no</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ノ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>🔤 は行 / ハ行 - 平假名 & 片假名</h3>
+                            <div class="hiragana-grid">
+                                <div class="hiragana-cell" onclick="playSound('は')">
+                                    <div class="hiragana-char">は</div>
+                                    <div class="hiragana-romaji">ha</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ハ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('ひ')">
+                                    <div class="hiragana-char">ひ</div>
+                                    <div class="hiragana-romaji">hi</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ヒ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('ふ')">
+                                    <div class="hiragana-char">ふ</div>
+                                    <div class="hiragana-romaji">fu</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">フ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('へ')">
+                                    <div class="hiragana-char">へ</div>
+                                    <div class="hiragana-romaji">he</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ヘ</div>
+                                </div>
+                                <div class="hiragana-cell" onclick="playSound('ほ')">
+                                    <div class="hiragana-char">ほ</div>
+                                    <div class="hiragana-romaji">ho</div>
+                                    <div style="font-size: 1.2em; color: #667eea; margin-top: 2px;">ホ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h4>💡 发音要点</h4>
+                            <div class="tip-box">
+                                <p><strong>ふ (fu)</strong>：不同于汉语"夫"，发音时嘴唇微圆，气流从中间通过</p>
+                                <p><strong>は (ha)</strong>：作助词时读作"wa"，但假名仍为は</p>
+                                <p><strong>へ (he)</strong>：作助词时读作"e"，但假名仍为へ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 物品词汇标签页 -->
+                <div id="vocab" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>📚 学习用品</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playVocabSound('ほん')">
+                                    <div class="vocab-jp">本</div>
+                                    <div class="vocab-cn">书</div>
+                                    <div class="vocab-romaji">hon</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('ノート')">
+                                    <div class="vocab-jp">ノート</div>
+                                    <div class="vocab-cn">本子</div>
+                                    <div class="vocab-romaji">nooto</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('つくえ')">
+                                    <div class="vocab-jp">机</div>
+                                    <div class="vocab-cn">桌子</div>
+                                    <div class="vocab-romaji">tsukue</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('けいたいでんわ')">
+                                    <div class="vocab-jp">携帯電話</div>
+                                    <div class="vocab-cn">手机</div>
+                                    <div class="vocab-romaji">keitai denwa</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>🚗 交通工具</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playVocabSound('くるま')">
+                                    <div class="vocab-jp">車</div>
+                                    <div class="vocab-cn">车</div>
+                                    <div class="vocab-romaji">kuruma</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('でんしゃ')">
+                                    <div class="vocab-jp">電車</div>
+                                    <div class="vocab-cn">电车</div>
+                                    <div class="vocab-romaji">densha</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('バス')">
+                                    <div class="vocab-jp">バス</div>
+                                    <div class="vocab-cn">公交车</div>
+                                    <div class="vocab-romaji">basu</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('ひこうき')">
+                                    <div class="vocab-jp">飛行機</div>
+                                    <div class="vocab-cn">飞机</div>
+                                    <div class="vocab-romaji">hikouki</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>🏠 生活用品</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playVocabSound('かばん')">
+                                    <div class="vocab-jp">鞄</div>
+                                    <div class="vocab-cn">包</div>
+                                    <div class="vocab-romaji">kaban</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('とけい')">
+                                    <div class="vocab-jp">時計</div>
+                                    <div class="vocab-cn">时钟</div>
+                                    <div class="vocab-romaji">tokei</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('ふうとう')">
+                                    <div class="vocab-jp">封筒</div>
+                                    <div class="vocab-cn">信封</div>
+                                    <div class="vocab-romaji">fuutou</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('はさみ')">
+                                    <div class="vocab-jp">鋏</div>
+                                    <div class="vocab-cn">剪刀</div>
+                                    <div class="vocab-romaji">hasami</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>🍱 食物饮品</h3>
+                            <div class="vocab-grid">
+                                <div class="vocab-cell" onclick="playVocabSound('パン')">
+                                    <div class="vocab-jp">パン</div>
+                                    <div class="vocab-cn">面包</div>
+                                    <div class="vocab-romaji">pan</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('みず')">
+                                    <div class="vocab-jp">水</div>
+                                    <div class="vocab-cn">水</div>
+                                    <div class="vocab-romaji">mizu</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('にく')">
+                                    <div class="vocab-jp">肉</div>
+                                    <div class="vocab-cn">肉</div>
+                                    <div class="vocab-romaji">niku</div>
+                                </div>
+                                <div class="vocab-cell" onclick="playVocabSound('さかな')">
+                                    <div class="vocab-jp">魚</div>
+                                    <div class="vocab-cn">鱼</div>
+                                    <div class="vocab-romaji">sakana</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 语法学习标签页 -->
+                <div id="grammar" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>📘 です疑问句</h3>
+                            <div class="grammar-section">
+                                <h4>基本结构：</h4>
+                                <div class="grammar-box">
+                                    <strong>名词 + ですか</strong>
+                                    <p>例：学生ですか？（是学生吗？）</p>
+                                </div>
+                                
+                                <h4>人称代词 + ですか：</h4>
+                                <div class="grammar-example">
+                                    <p><strong>あなたは学生ですか？</strong></p>
+                                    <p>Anata wa gakusei desu ka?</p>
+                                    <p>你是学生吗？</p>
+                                </div>
+
+                                <div class="grammar-example">
+                                    <p><strong>これは本ですか？</strong></p>
+                                    <p>Kore wa hon desu ka?</p>
+                                    <p>这是书吗？</p>
+                                </div>
+
+                                <div class="grammar-example">
+                                    <p><strong>それは車ですか？</strong></p>
+                                    <p>Sore wa kuruma desu ka?</p>
+                                    <p>那是车吗？</p>
+                                </div>
+
+                                <div class="tip-box">
+                                    <h4>💡 使用要点</h4>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li><strong>は (wa)</strong>：提示主题，读作"wa"但写作"は"</li>
+                                        <li><strong>か</strong>：疑问助词，句末加"？"</li>
+                                        <li>回答：はい（是）/ いいえ（不是）</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>📝 肯定与否定回答</h3>
+                            <div class="grammar-section">
+                                <div class="grammar-example">
+                                    <p><strong>肯定回答：</strong></p>
+                                    <p>はい、学生です。</p>
+                                    <p>Hai, gakusei desu.</p>
+                                    <p>是的，我是学生。</p>
+                                </div>
+
+                                <div class="grammar-example">
+                                    <p><strong>否定回答：</strong></p>
+                                    <p>いいえ、学生ではありません。</p>
+                                    <p>Iie, gakusei dewa arimasen.</p>
+                                    <p>不，我不是学生。</p>
+                                </div>
+
+                                <div class="grammar-example">
+                                    <p><strong>简单否定：</strong></p>
+                                    <p>いいえ、違います。</p>
+                                    <p>Iie, chigaimasu.</p>
+                                    <p>不，不是的。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 问答练习标签页 -->
+                <div id="practice" class="tab-pane">
+                    <div class="section-grid">
+                        <div class="mini-card">
+                            <h3>✍️ 问答句练习</h3>
+                            <div class="practice-section">
+                                <p>根据提示，完成5个问答句练习：</p>
+                                
+                                <div class="qa-practice">
+                                    <div class="qa-item">
+                                        <div class="qa-number">1</div>
+                                        <div class="qa-content">
+                                            <div class="qa-jp">これは本ですか？</div>
+                                            <div class="qa-cn">这是书吗？</div>
+                                            <input type="text" class="practice-input" placeholder="回答..." data-answer="はい、本です">
+                                        </div>
+                                    </div>
+
+                                    <div class="qa-item">
+                                        <div class="qa-number">2</div>
+                                        <div class="qa-content">
+                                            <div class="qa-jp">あなたは学生ですか？</div>
+                                            <div class="qa-cn">你是学生吗？</div>
+                                            <input type="text" class="practice-input" placeholder="回答..." data-answer="はい、学生です">
+                                        </div>
+                                    </div>
+
+                                    <div class="qa-item">
+                                        <div class="qa-number">3</div>
+                                        <div class="qa-content">
+                                            <div class="qa-jp">それは車ですか？</div>
+                                            <div class="qa-cn">那是车吗？</div>
+                                            <input type="text" class="practice-input" placeholder="回答..." data-answer="はい、車です">
+                                        </div>
+                                    </div>
+
+                                    <div class="qa-item">
+                                        <div class="qa-number">4</div>
+                                        <div class="qa-content">
+                                            <div class="qa-jp">これはノートですか？</div>
+                                            <div class="qa-cn">这是笔记本吗？</div>
+                                            <input type="text" class="practice-input" placeholder="回答..." data-answer="はい、ノートです">
+                                        </div>
+                                    </div>
+
+                                    <div class="qa-item">
+                                        <div class="qa-number">5</div>
+                                        <div class="qa-content">
+                                            <div class="qa-jp">あなたは先生ですか？</div>
+                                            <div class="qa-cn">您是老师吗？</div>
+                                            <input type="text" class="practice-input" placeholder="回答..." data-answer="いいえ、先生ではありません">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="audio-controls">
+                                    <button class="check-btn" onclick="checkAnswers()">✅ 检查答案</button>
+                                    <button class="check-btn" onclick="clearAnswers()">🔄 清空重做</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h3>📝 写作练习</h3>
+                            <div class="practice-section">
+                                <p>请用です疑问句写5个句子：</p>
+                                <textarea class="practice-input" rows="6" placeholder="例：これは本ですか？&#10;それは車ですか？&#10;..." id="writing-practice"></textarea>
+                                
+                                <div class="audio-controls">
+                                    <button class="check-btn" onclick="showExample()">💡 查看示例</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 标签页切换功能
+        function showTab(tabName) {
+            // 隐藏所有标签页
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // 移除所有标签按钮的active类
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 显示选中的标签页
+            document.getElementById(tabName).classList.add('active');
+            
+            // 为选中的标签按钮添加active类
+            event.target.classList.add('active');
+        }
+
+        // 音频播放功能
+        function playSound(character) {
+            console.log(`播放发音: ${character}`);
+            
+            // 创建临时的视觉反馈
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(125, 211, 192, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-size: 1.3rem;
+                z-index: 1000;
+                animation: fadeInOut 1s ease-in-out;
+            `;
+            toast.textContent = `${character}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 1000);
+
+            // 使用Web Speech API播放日语发音
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(character);
+                utterance.lang = 'ja-JP'; // 日语
+                utterance.rate = 0.8;     // 稍慢语速
+                utterance.pitch = 1.0;    // 标准音调
+                
+                // 取消之前的语音
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            } else {
+                // 备用方案：创建音频元素
+                try {
+                    const audio = new Audio();
+                    // 使用Google TTS作为备用
+                    const text = encodeURIComponent(character);
+                    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${text}&tl=ja&client=tw-ob`;
+                    audio.play().catch(e => {
+                        console.log('音频播放失败，使用视觉提示');
+                    });
+                } catch (error) {
+                    console.log('备用音频方案也失败');
+                }
+            }
+        }
+
+
+
+        // 词汇发音功能
+        function playVocabSound(word) {
+            console.log(`播放词汇发音: ${word}`);
+            
+            // 创建视觉反馈
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(102, 126, 234, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-size: 1.3rem;
+                z-index: 1000;
+                animation: fadeInOut 1s ease-in-out;
+            `;
+            toast.textContent = `${word}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 1000);
+
+            // 播放日语发音
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.8;
+                utterance.pitch = 1.0;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            } else {
+                try {
+                    const audio = new Audio();
+                    const text = encodeURIComponent(word);
+                    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${text}&tl=ja&client=tw-ob`;
+                    audio.play().catch(e => {
+                        console.log('词汇音频播放失败');
+                    });
+                } catch (error) {
+                    console.log('备用词汇音频方案失败');
+                }
+            }
+        }
+
+
+
+        // 答案检查功能
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.practice-input[data-answer]');
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.answer;
+                
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#4ade80';
+                    input.style.backgroundColor = 'rgba(74, 222, 128, 0.1)';
+                } else {
+                    input.style.borderColor = '#f87171';
+                    input.style.backgroundColor = 'rgba(248, 113, 113, 0.1)';
+                    input.placeholder = `正确：${correctAnswer}`;
+                }
+            });
+        }
+
+        function clearAnswers() {
+            const inputs = document.querySelectorAll('.practice-input[data-answer]');
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '#e0e6ff';
+                input.style.backgroundColor = 'white';
+                input.placeholder = '回答...';
+            });
+        }
+
+
+
+        function showExample() {
+            const example = `これは本ですか？（这是书吗？）
+それは車ですか？（那是车吗？）
+あなたは学生ですか？（你是学生吗？）
+これはノートですか？（这是笔记本吗？）
+それは時計ですか？（那是时钟吗？）`;
+            document.getElementById('writing-practice').value = example;
+        }
+
+
+
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
